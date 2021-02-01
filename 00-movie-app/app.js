@@ -68,7 +68,6 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
     //const searchTerm = ???  //assign the value of the input's value
     const searchTerm = search.value;
-    console.log(searchTerm);
 
     if(searchTerm && searchTerm !== '') {
         //call the getMovies function and pass the concatenated value of SEARCH_API + searchTerm
