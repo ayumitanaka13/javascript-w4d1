@@ -73,7 +73,7 @@ form.addEventListener('submit', (e) => {
         //call the getMovies function and pass the concatenated value of SEARCH_API + searchTerm
         getMovies(SEARCH_API + searchTerm);
         //reset the input's value
-        search.value = "";
+        searchTerm = "";
     } else {
         window.location.reload()
     }
