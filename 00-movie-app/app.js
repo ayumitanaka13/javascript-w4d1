@@ -16,12 +16,16 @@ getMovies(API_URL);
 //------assign a response to a fetch/axios method
 //------call showMovies function and pass the response as argument
 async function getMovies(url) {
-    // const res = await fetch(API_URL)
-    // const movies = await res.json()
-    // showMovies(movies.results);
-
-    const movies = await axios.get(url);
-    showMovies(movies.data.results);
+    try {
+        // const res = await fetch(url)
+        // const data = await res.json()
+        // showMovies(data.results);
+        
+        const movies = await axios.get(url);
+        showMovies(movies.data.results);
+    } catch (err) {
+        console.log("There's an error!", err);
+    }
 }
 
 function showMovies(movies) {
@@ -31,21 +35,21 @@ function showMovies(movies) {
     movies.forEach((movie) => {
         //destructure the movie object
         // const { ???, ??? ,vote_average } = movie //include the "vote_average"
-        const { poster_path, overview, vote_average } = movie
+        const { title, poster_path, overview, vote_average } = movie
         //create a div element
         const div = document.createElement('div');
         //add a "movie" class in that div 
         div.classList.add('movie');
         //manipulate the newly created element's innerHTML (I called it movieEl in this sample)
         div.innerHTML = `
-            <img src="${IMG_PATH + movie.poster_path}" alt="">
+            <img src="${IMG_PATH}${poster_path}" alt="${title}">
             <div class="movie-info">
-          <h3></h3>
-          <span class="${getClassByRate(movie.vote_average)}">${movie.vote_average}</span>
+          <h3>${title}</h3>
+          <span class="${getClassByRate(vote_average)}">${vote_average}</span>
             </div>
             <div class="overview">
           <h3>Overview</h3>
-          ${movie.overview}
+          ${overview}
         </div>
         `
         //append the movieEl to main
@@ -73,7 +77,7 @@ form.addEventListener('submit', (e) => {
         //call the getMovies function and pass the concatenated value of SEARCH_API + searchTerm
         getMovies(SEARCH_API + searchTerm);
         //reset the input's value
-        searchTerm = "";
+        search.value = "";
     } else {
         window.location.reload()
     }
